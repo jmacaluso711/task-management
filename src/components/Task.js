@@ -41,6 +41,7 @@ export default class Task extends Component {
 const TaskItem = styled.li`
   display: flex;
   list-style-type: none;
+  margin-bottom: 2px;
   background-color: #fff;
 
   > span {
@@ -56,12 +57,11 @@ const TaskItem = styled.li`
     justify-content: center;
     flex: 4;
     padding: 1rem;
-
     span {
       font-size: 10px;
     }
   }
-
+  
   h2 {
     font-size: 16px;
     font-weight: normal;
@@ -72,7 +72,7 @@ const TaskItem = styled.li`
     font-size: 14px;
     margin: 0;
   }
-
+  
   button {
     color: gray;
     font-weight: bold;

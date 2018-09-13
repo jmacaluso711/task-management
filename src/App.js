@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import TaskList from './components/TaskList';
-
+import styled from 'styled-components';
 
 class App extends Component {
   state = {
@@ -56,34 +56,40 @@ class App extends Component {
 
     return (
       <div className="app">
-        <form ref={(el) => this.taskForm = el} onSubmit={(e) => this.addTask(e)}>
-          <div>
-            <input 
-              ref={(input) => this.name = input}
-              name="name"
-              type="text"
-              required
-            />
-          </div>
-          <div>
-            <textarea 
-              ref={(input) => this.description = input}
-              name="description" 
-              cols="30" 
-              rows="5"
-              required
-            ></textarea>
-          </div>
-          <div>
-            <input 
-              ref={(input) => this.dueDate = input}
-              name="dueDate"
-              type="date"
-              required
-            />
-          </div>
-          <button>+ Add Task</button>
-        </form>
+        <FormContainer>
+          <h2>Add a Task</h2>
+          <form ref={(el) => this.taskForm = el} onSubmit={(e) => this.addTask(e)}>
+            <FormGroup>
+              <label htmlFor="name">Name</label>
+              <input 
+                ref={(input) => this.name = input}
+                name="name"
+                type="text"
+                required
+              />
+            </FormGroup>
+            <FormGroup>
+              <label htmlFor="description">Description</label>
+              <textarea 
+                ref={(input) => this.description = input}
+                name="description" 
+                cols="30" 
+                rows="5"
+                required
+              ></textarea>
+            </FormGroup>
+            <FormGroup>
+              <label htmlFor="dueDate">Due Date</label>
+              <input 
+                ref={(input) => this.dueDate = input}
+                name="dueDate"
+                type="date"
+                required
+              />
+            </FormGroup>
+            <button>+ Add Task</button>
+          </form>
+        </FormContainer>
         {tasks &&
           <TaskList
             tasks={tasks}
@@ -97,3 +103,35 @@ class App extends Component {
 }
 
 export default App;
+
+const FormContainer = styled.div`
+  background-color: #fff;
+  padding: 1rem;
+  margin-bottom: 1rem;
+
+  h2 {
+    margin-top: 0;
+  }
+`
+
+const FormGroup = styled.div`
+  margin-bottom: .5rem;
+  input, textarea {
+    color: #333;
+    font-size: 12px;
+    padding: .75rem;
+    border: 1px solid lightgray;
+    
+    &:focus {
+      outline: none;
+    }
+  }
+  label {
+    color: gray;
+    font-size: 10px;
+    font-weight: bold;
+    text-transform: uppercase;
+    display: inline-block;
+    margin-bottom: .25rem;
+  }
+`
