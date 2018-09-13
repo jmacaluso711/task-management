@@ -1,27 +1,56 @@
 import React, { Component } from 'react';
 
-const Task = ({ task, completeTask }) => (
-  <li>
-    <input type="checkbox" onChange={completeTask} />
-    <h2>{task.name}</h2>
-    <p>{task.description}</p>
-    <span>{task.dueDate}</span>
-    <button>x</button>
-  </li>
+const TaskList = ({ tasks, completeTask, removeTask }) => (
+  <ul>
+    {
+      tasks.map((task, index) => 
+        <Task 
+          key={task.id}
+          index={index}
+          task={task} 
+          completeTask={completeTask} 
+          removeTask={removeTask} 
+        />)
+    }
+  </ul>
 )
+
+class Task extends Component {
+  complete = (index) => {
+    this.props.completeTask(index);
+  }
+
+  remove = (index) => {
+    this.props.removeTask(index);
+  }
+
+  render() {
+    const { task, index } = this.props;
+    return (
+      <li className={task.complete ? 'complete' : ''}>
+        <input type="checkbox" onChange={() => this.complete(index)} />
+        <h2>{task.name}</h2>
+        <p>{task.description}</p>
+        <span>{task.dueDate}</span>
+        <button onClick={() => this.remove(index)}>x</button>
+      </li>
+    )
+  }
+}
 
 class App extends Component {
   state = {
-    tasks: [],
-    done: false
+    tasks: []
   }
 
   addTask = (e) => {
     e.preventDefault();
     const task = {
+      id: Date.now(),
       name: this.name.value,
       description: this.description.value,
-      dueDate: this.dueDate.value
+      dueDate: this.dueDate.value,
+      complete: false
     }
     this.setState({ 
       tasks: [...this.state.tasks, task]
@@ -29,8 +58,16 @@ class App extends Component {
     this.taskForm.reset();
   }
 
-  completeTask = (e, key) => {
-    console.log(key);
+  completeTask = (index) => {
+    const tasks = [...this.state.tasks];
+    tasks[index].complete = !tasks[index].complete;
+    this.setState({tasks});
+  }
+
+  removeTask = (index) => {
+    const tasks = [...this.state.tasks];
+    tasks.splice(index, 1);
+    this.setState({tasks});
   }
 
   render() {
@@ -38,9 +75,13 @@ class App extends Component {
 
     return (
       <div>
-        <ul>
-          {tasks.map((task, i) => <Task key={i} task={task} completeTask={(e, key) => this.completeTask(e, key)} />)}
-        </ul>
+        {tasks && 
+          <TaskList 
+            tasks={tasks} 
+            completeTask={this.completeTask}
+            removeTask={this.removeTask}
+          />
+        }
         <form ref={(el) => this.taskForm = el} onSubmit={(e) => this.addTask(e)}>
           <div>
             <input 
