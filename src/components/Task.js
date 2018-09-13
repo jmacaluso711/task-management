@@ -74,13 +74,13 @@ const TaskItem = styled.li`
   }
 
   button {
-    color: #aa231f;
+    color: gray;
     font-weight: bold;
     font-size: 14px;
     display: block;
     width: 75px;
     border: none;
-    background-color: #ff5c49;
+    background-color: lightgray;
     margin-left: auto;
     cursor: pointer;
   }
