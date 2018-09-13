@@ -1,8 +1,10 @@
 import React from 'react';
 import Task from './Task';
+import styled from 'styled-components';
+
 
 const TaskList = ({ tasks, completeTask, removeTask }) => (
-  <ul>
+  <Tasks>
     {
       tasks.map((task, index) =>
         <Task
@@ -13,7 +15,13 @@ const TaskList = ({ tasks, completeTask, removeTask }) => (
           removeTask={removeTask}
         />)
     }
-  </ul>
+  </Tasks>
 )
+
+const Tasks = styled.ul`
+  width: 100%;
+  margin: 0;
+  padding: 0;
+`
 
 export default TaskList;

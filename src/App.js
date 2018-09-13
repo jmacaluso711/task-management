@@ -55,7 +55,7 @@ class App extends Component {
     const { tasks } = this.state;
 
     return (
-      <div>
+      <div className="app">
         <form ref={(el) => this.taskForm = el} onSubmit={(e) => this.addTask(e)}>
           <div>
             <input 
