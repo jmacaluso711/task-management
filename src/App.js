@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import TaskList from './components/TaskList';
 import styled from 'styled-components';
 
-class App extends Component {
+export default class App extends Component {
   state = {
     tasks: JSON.parse(localStorage.getItem('tasks')) || []
   }
@@ -112,8 +112,6 @@ class App extends Component {
     );
   }
 }
-
-export default App;
 
 const FormContainer = styled.div`
   background-color: #fff;
