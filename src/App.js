@@ -4,7 +4,11 @@ import styled from 'styled-components';
 
 class App extends Component {
   state = {
-    tasks: []
+    tasks: JSON.parse(localStorage.getItem('tasks')) || []
+  }
+
+  save = () => {
+    localStorage.setItem('tasks', JSON.stringify(this.state.tasks));
   }
 
   /**
@@ -21,10 +25,11 @@ class App extends Component {
       dueDate: this.dueDate.value,
       complete: false
     }
-
-    this.setState({ 
-      tasks: [...this.state.tasks, task]
-    });
+    
+    this.setState(
+      { tasks: [...this.state.tasks, task] }, 
+      () => this.save()
+    );
     
     this.taskForm.reset();
   }
@@ -37,7 +42,10 @@ class App extends Component {
   completeTask = (index) => {
     const tasks = [...this.state.tasks];
     tasks[index].complete = !tasks[index].complete;
-    this.setState({tasks});
+    this.setState(
+      {tasks},
+      () => this.save()
+    );
   }
 
   /**
@@ -48,7 +56,10 @@ class App extends Component {
   removeTask = (index) => {
     const tasks = [...this.state.tasks];
     tasks.splice(index, 1);
-    this.setState({tasks});
+    this.setState(
+      {tasks},
+      () => this.save()
+    );
   }
 
   render() {

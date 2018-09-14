@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-
+import moment from 'moment';
 
 export default class Task extends Component {
+  state = {
+    viewDetail: false
+  }
+
   /**
    * Pass the task index to our App component
    * so we can toggle the complete value
@@ -21,18 +25,31 @@ export default class Task extends Component {
 
   render() {
     const { task, index } = this.props;
-
+    const today = moment().format('YYYY-MM-DD');
+    const tomorrow = moment().add(1, 'days').format('YYYY-MM-DD');
+    const pastDue = moment(task.dueDate).isBefore(today);
+    const dueToday = moment(task.dueDate).isSame(today);
+    const dueTomorrow = moment(task.dueDate).isSame(tomorrow);
+    
     return (
-      <TaskItem className={task.complete ? 'complete' : ''}>
+      <TaskItem>
         <span>  
-          <input type="checkbox" onChange={() => this.complete(index)} />
+          <input 
+            id={'task-'+index} 
+            type="checkbox" 
+            onChange={() => this.complete(index)}
+            checked={task.complete}
+          />
+          <label htmlFor={'task-' + index}></label>
         </span>
         <div>
-          <span>{task.dueDate}</span>
+          {pastDue ? 'Past Due' : ''}
+          {dueToday || dueTomorrow ? 'Due Soon' : ''}
+          <time dateTime={task.dueDate}>{moment(task.dueDate).format('MMM Do YYYY')}</time>
           <h2>{task.name}</h2>
           <p>{task.description}</p>
         </div>
-        <button onClick={() => this.remove(index)}>x</button>
+        <ButtonRemove onClick={() => this.remove(index)}>x</ButtonRemove>
       </TaskItem>
     )
   }
@@ -57,31 +74,32 @@ const TaskItem = styled.li`
     justify-content: center;
     flex: 4;
     padding: 1rem;
-    span {
+
+    time {
       font-size: 10px;
     }
   }
   
   h2 {
     font-size: 16px;
-    font-weight: normal;
-    margin: 0;
+    font-weight: bold;
+    margin: .25rem 0;
   }
 
   p {
-    font-size: 14px;
+    font-size: 12px;
     margin: 0;
   }
-  
-  button {
-    color: gray;
-    font-weight: bold;
-    font-size: 14px;
-    display: block;
-    width: 75px;
-    border: none;
-    background-color: lightgray;
-    margin-left: auto;
-    cursor: pointer;
-  }
+`
+
+const ButtonRemove = styled.button`
+  color: gray;
+  font-weight: bold;
+  font-size: 14px;
+  display: block;
+  width: 75px;
+  border: none;
+  background-color: lightgray;
+  margin-left: auto;
+  cursor: pointer;
 `
