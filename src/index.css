@@ -3,20 +3,15 @@
 }
 
 body {
-  color: #333;
+  color: #595859;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   margin: 0;
   padding: 3rem;
-  background-color: #f0f0f0;
+  background-color: #71cddd;
 }
 
 .app {
   width: 100%;
   max-width: 420px;
   margin: 0 auto;
-}
-
-.app form input,
-.app form textarea {
-  width: 100%;
 }

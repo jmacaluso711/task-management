@@ -118,10 +118,18 @@ export default App;
 const FormContainer = styled.div`
   background-color: #fff;
   padding: 1rem;
-  margin-bottom: 1rem;
+  border-radius: 8px;
+  border: 1px solid #00b6cb;
+  box-shadow: 0px 0px 8px rgba(18, 163, 180,.5);
+  margin-bottom: 2rem;
 
   h2 {
     margin-top: 0;
+  }
+
+  input,
+  textarea {
+    width: 100%;
   }
 `
 
@@ -138,7 +146,6 @@ const FormGroup = styled.div`
     }
   }
   label {
-    color: gray;
     font-size: 10px;
     font-weight: bold;
     text-transform: uppercase;

@@ -23,7 +23,7 @@ export default class Task extends Component {
     const { task, index } = this.props;
     const today = moment().format('YYYY-MM-DD');
     const tomorrow = moment().add(1, 'days').format('YYYY-MM-DD');
-    const pastDue = moment(task.dueDate).isBefore(today);
+    const dueDatePast = moment(task.dueDate).isBefore(today);
     const dueToday = moment(task.dueDate).isSame(today);
     const dueTomorrow = moment(task.dueDate).isSame(tomorrow);
     
@@ -39,9 +39,11 @@ export default class Task extends Component {
           <label htmlFor={'task-' + index}></label>
         </span>
         <div>
-          {pastDue ? 'Past Due' : ''}
-          {dueToday || dueTomorrow ? 'Due Soon' : ''}
-          <time dateTime={task.dueDate}>{moment(task.dueDate).format('MMM Do YYYY')}</time>
+          <time dateTime={task.dueDate}>
+            {dueDatePast ? <span className="warning warning--overdue">Overdue!</span> : ''}
+            {dueToday || dueTomorrow ? <span className="warning warning--due-soon">Due Soon!</span> : ''}
+            {moment(task.dueDate).format('MMM Do YYYY')}
+          </time>
           <h2>{task.name}</h2>
           <p>{task.description}</p>
         </div>
@@ -54,7 +56,10 @@ export default class Task extends Component {
 const TaskItem = styled.li`
   display: flex;
   list-style-type: none;
-  margin-bottom: 2px;
+  margin-bottom: 1rem;
+  border-radius: 8px;
+  border: 1px solid #00b6cb;
+  box-shadow: 0px 0px 8px rgba(18, 163, 180,.5);
   background-color: #fff;
 
   > span {
@@ -73,6 +78,20 @@ const TaskItem = styled.li`
 
     time {
       font-size: 10px;
+    }
+
+    .warning {
+      color: #fff;
+      display: inline-block;
+      margin-right: 10px;
+      padding: 3px;
+      border-radius: 3px;
+    }
+    .warning--overdue {
+      background-color: #ff5c49;
+    }
+    .warning--due-soon {
+      background-color: #34bc6e;
     }
   }
   
@@ -95,7 +114,7 @@ const ButtonRemove = styled.button`
   display: block;
   width: 75px;
   border: none;
-  background-color: lightgray;
   margin-left: auto;
   cursor: pointer;
+  background-color: transparent;
 `
