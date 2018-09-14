@@ -3,10 +3,6 @@ import styled from 'styled-components';
 import moment from 'moment';
 
 export default class Task extends Component {
-  state = {
-    viewDetail: false
-  }
-
   /**
    * Pass the task index to our App component
    * so we can toggle the complete value
