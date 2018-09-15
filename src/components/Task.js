@@ -4,11 +4,11 @@ import moment from 'moment';
 
 export default class Task extends Component {
   /**
-   * Pass the task index to our App component
+   * Pass the task object to our App component
    * so we can toggle the complete value
    */
-  complete = (index) => {
-    this.props.completeTask(index);
+  complete = (task) => {
+    this.props.completeTask(task);
   }
 
   /**
@@ -33,7 +33,7 @@ export default class Task extends Component {
           <input 
             id={'task-'+index} 
             type="checkbox" 
-            onChange={() => this.complete(index)}
+            onChange={() => this.complete(task)}
             checked={task.complete}
           />
           <label htmlFor={'task-' + index}></label>

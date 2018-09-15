@@ -47,11 +47,11 @@ export default class App extends Component {
    * Toggle the value of complete
    * Update our state and save to localStorage
    */
-  completeTask = (index) => {
+  completeTask = (task) => {
     const tasks = [...this.state.tasks];
-    tasks[index].complete = !tasks[index].complete;
+    task.complete = !task.complete;
     this.setState(
-      {tasks},
+      { tasks },
       () => this.save()
     );
   }
@@ -65,7 +65,7 @@ export default class App extends Component {
     const tasks = [...this.state.tasks];
     tasks.splice(index, 1);
     this.setState(
-      {tasks},
+      { tasks },
       () => this.save()
     );
   }
@@ -94,10 +94,11 @@ export default class App extends Component {
   render() {
     const { tasks, filter } = this.state;
     let filteredTasks = tasks;
+
     
     /**
-     * Update our filteredTasks variable based on
-     * the selected filter
+     * Update our filteredTasks variable 
+     * based on the selected filter
      */
     if (filter) {
       const today = moment().format('YYYY-MM-DD');
@@ -166,6 +167,7 @@ export default class App extends Component {
               tasks={filteredTasks}
               completeTask={this.completeTask}
               removeTask={this.removeTask}
+              filter={filter}
             />
           </React.Fragment>
         }

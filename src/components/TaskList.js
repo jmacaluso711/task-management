@@ -2,7 +2,7 @@ import React from 'react';
 import Task from './Task';
 import styled from 'styled-components';
 
-const TaskList = ({ tasks, completeTask, removeTask }) => (
+const TaskList = ({ tasks, completeTask, removeTask, filter }) => (
   <Tasks>
     {
       tasks.map((task, index) =>
@@ -12,6 +12,7 @@ const TaskList = ({ tasks, completeTask, removeTask }) => (
           task={task}
           completeTask={completeTask}
           removeTask={removeTask}
+          filter={filter}
         />)
     }
   </Tasks>

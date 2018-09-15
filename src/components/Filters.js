@@ -73,7 +73,6 @@ const FilterGroup = styled.div`
     cursor: pointer;
   }
   input:checked ~ label {
-    border-color: #188291;
     background-color: #188291;
   }
 `;
