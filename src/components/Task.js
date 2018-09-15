@@ -59,7 +59,7 @@ const TaskItem = styled.li`
   margin-bottom: 1rem;
   border-radius: 8px;
   border: 1px solid #00b6cb;
-  box-shadow: 0px 0px 8px rgba(18, 163, 180,.5);
+  box-shadow: 0px 0px 10px rgba(18, 163, 180,.6);
   background-color: #fff;
 
   > span {

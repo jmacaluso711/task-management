@@ -70,12 +70,19 @@ export default class App extends Component {
     );
   }
 
+  /**
+   * Set the filter state to the filter input value
+   */
   filterBy = (e) => {
     this.setState({
       filter: e.target.value
     });
   }
 
+  /**
+   * Clear our filter state and reset the filter form
+   * to get back to the default state
+   */
   clearFilters = (e) => {
     e.preventDefault();
     this.setState({
@@ -88,24 +95,24 @@ export default class App extends Component {
     const { tasks, filter } = this.state;
     let filteredTasks = tasks;
     
+    /**
+     * Update our filteredTasks variable based on
+     * the selected filter
+     */
     if (filter) {
       const today = moment().format('YYYY-MM-DD');
       const tomorrow = moment().add(1, 'days').format('YYYY-MM-DD');
-
       switch (filter) {
-        case 'complete':
-          filteredTasks = tasks.filter(task => task.complete === true);
-          break;
         case 'todayTomorrow':
           filteredTasks = tasks.filter(task => {
             return moment(task.dueDate).isSame(today) || moment(task.dueDate).isSame(tomorrow);
           });
           break;
+        case 'complete':
+          filteredTasks = tasks.filter(task => task.complete === true);
+          break;
         case 'overdue':
           filteredTasks = tasks.filter(task => moment(task.dueDate).isBefore(today));
-          break;
-        case 'clear':
-          filteredTasks = tasks;
           break;
         default:
           break;

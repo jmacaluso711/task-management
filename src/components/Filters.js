@@ -7,6 +7,7 @@ export default class Filters extends Component {
 
     return (
       <FilterContainer>
+        <h2>Filter tasks by:</h2>
         <form ref={(el) => this.filterForm = el}>
           <FilterGroup>
             <input
@@ -15,7 +16,7 @@ export default class Filters extends Component {
               name="filter"
               value="todayTomorrow"
               onChange={filterBy} />
-            <label htmlFor="todayTomorrow">Today / Tomorrow</label>
+            <label htmlFor="todayTomorrow">Due Today/Tomorrow</label>
           </FilterGroup>
           <FilterGroup>
             <input
