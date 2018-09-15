@@ -152,7 +152,7 @@ export default class App extends Component {
                 required
               />
             </FormGroup>
-            <button>+ Add Task</button>
+            <AddTaskButton>+ Add Task</AddTaskButton>
           </form>
         </FormContainer>
         {tasks.length !== 0 &&
@@ -179,7 +179,7 @@ const FormContainer = styled.div`
   padding: 1rem;
   border-radius: 8px;
   border: 1px solid #00b6cb;
-  box-shadow: 0px 0px 8px rgba(18, 163, 180,.5);
+  box-shadow: 0px 0px 10px rgba(18, 163, 180,.6);
   margin-bottom: 2rem;
 
   h2 {
@@ -210,5 +210,21 @@ const FormGroup = styled.div`
     text-transform: uppercase;
     display: inline-block;
     margin-bottom: .25rem;
+  }
+`;
+
+const AddTaskButton = styled.button`
+  color: #fff;  
+  font-size: 1rem;
+  font-weight: bold;
+  margin-top: 1rem;
+  padding: .75rem 2rem;
+  border: none;
+  border-radius: 5px;
+  background-color: #fe8500;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  &:hover {
+    background-color: #db7c00
   }
 `;

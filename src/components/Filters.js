@@ -37,7 +37,7 @@ export default class Filters extends Component {
             <label htmlFor="complete">Complete</label>
           </FilterGroup>
           <FilterGroup>
-            <button onClick={clearFilters}>Clear</button>
+            <ClearButton onClick={clearFilters}>Clear</ClearButton>
           </FilterGroup>
         </form>
       </FilterContainer>
@@ -46,11 +46,45 @@ export default class Filters extends Component {
 }
 
 const FilterContainer = styled.div`
+  margin-bottom: 1rem;
   form {
     display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  h2 {
+    color: #fff;
+    font-size: 16px;
   }
 `;
 
 const FilterGroup = styled.div`
+  input {
+    display: none;
+  }
+  label {
+    color: #fff;
+    font-size: .875rem;
+    display: inline-block;
+    padding: .5rem;
+    border-radius: 4px;
+    border: 2px solid #fff;
+    background-color: transparent;
+    cursor: pointer;
+  }
+  input:checked ~ label {
+    border-color: #188291;
+    background-color: #188291;
+  }
+`;
 
+const ClearButton = styled.button`
+  color: #fff;
+  font-size: .875rem;
+  display: inline-block;
+  padding: .5rem;
+  border-radius: 4px;
+  border: 2px solid #fff;
+  background-color: transparent;
+  cursor: pointer;
 `;
