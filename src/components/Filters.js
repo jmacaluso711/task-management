@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 
-class Filters extends Component {
+export default class Filters extends Component {
   render() {
-    const { filterBy } = this.props;
+    const { filterBy, clearFilters } = this.props;
+
     return (
       <FilterContainer>
         <form ref={(el) => this.filterForm = el}>
@@ -35,13 +36,7 @@ class Filters extends Component {
             <label htmlFor="complete">Complete</label>
           </FilterGroup>
           <FilterGroup>
-            <input
-              id="clear"
-              type="radio"
-              name="filter"
-              value="clear"
-              onChange={filterBy} />
-            <label htmlFor="clear">Clear</label>
+            <button onClick={clearFilters}>Clear</button>
           </FilterGroup>
         </form>
       </FilterContainer>
@@ -53,10 +48,8 @@ const FilterContainer = styled.div`
   form {
     display: flex;
   }
-`
+`;
 
 const FilterGroup = styled.div`
 
-`
-
-export default Filters;
+`;

@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import TaskList from './components/TaskList';
 import Filters from './components/Filters';
 import moment from 'moment';
-
 const token = 'tasks'
 
 export default class App extends Component {
@@ -77,6 +76,14 @@ export default class App extends Component {
     });
   }
 
+  clearFilters = (e) => {
+    e.preventDefault();
+    this.setState({
+      filter: ''
+    });
+    this.filters.filterForm.reset();
+  }
+
   render() {
     const { tasks, filter } = this.state;
     let filteredTasks = tasks;
@@ -143,7 +150,11 @@ export default class App extends Component {
         </FormContainer>
         {tasks.length !== 0 &&
           <React.Fragment>
-            <Filters ref={(el) => this.filters = el} filterBy={(e) => this.filterBy(e)}/>
+            <Filters 
+              ref={(el) => this.filters = el} 
+              filterBy={(e) => this.filterBy(e)}
+              clearFilters={(e) => this.clearFilters(e)}
+            />
             <TaskList
               tasks={filteredTasks}
               completeTask={this.completeTask}
@@ -172,7 +183,7 @@ const FormContainer = styled.div`
   textarea {
     width: 100%;
   }
-`
+`;
 
 const FormGroup = styled.div`
   margin-bottom: .5rem;
@@ -193,4 +204,4 @@ const FormGroup = styled.div`
     display: inline-block;
     margin-bottom: .25rem;
   }
-`
+`;
