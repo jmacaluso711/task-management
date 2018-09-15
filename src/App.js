@@ -1,14 +1,22 @@
 import React, { Component } from 'react';
-import TaskList from './components/TaskList';
 import styled from 'styled-components';
+import TaskList from './components/TaskList';
+import Filters from './components/Filters';
+import moment from 'moment';
+
+const token = 'tasks'
 
 export default class App extends Component {
   state = {
-    tasks: JSON.parse(localStorage.getItem('tasks')) || []
+    tasks: JSON.parse(localStorage.getItem(token)) || [],
+    filter: ''
   }
 
+  /**
+   * Set our state object in localStorage
+   */
   save = () => {
-    localStorage.setItem('tasks', JSON.stringify(this.state.tasks));
+    localStorage.setItem(token, JSON.stringify(this.state.tasks));
   }
 
   /**
@@ -17,7 +25,6 @@ export default class App extends Component {
    */
   addTask = (e) => {
     e.preventDefault();
-
     const task = {
       id: Date.now(),
       name: this.name.value,
@@ -25,19 +32,21 @@ export default class App extends Component {
       dueDate: this.dueDate.value,
       complete: false
     }
-    
     this.setState(
-      { tasks: [...this.state.tasks, task] }, 
+      { 
+        tasks: [...this.state.tasks, task], 
+        filter: '' 
+      }, 
       () => this.save()
     );
-    
+    this.filters.filterForm.reset();
     this.taskForm.reset();
   }
 
   /**
    * Take a copy of our state
    * Toggle the value of complete
-   * Update our state
+   * Update our state and save to localStorage
    */
   completeTask = (index) => {
     const tasks = [...this.state.tasks];
@@ -51,7 +60,7 @@ export default class App extends Component {
   /**
    * Take a copy of our state
    * Remove our task from the list
-   * Update our state
+   * Update our state and save to localStorage
    */
   removeTask = (index) => {
     const tasks = [...this.state.tasks];
@@ -62,8 +71,39 @@ export default class App extends Component {
     );
   }
 
+  filterBy = (e) => {
+    this.setState({
+      filter: e.target.value
+    });
+  }
+
   render() {
-    const { tasks } = this.state;
+    const { tasks, filter } = this.state;
+    let filteredTasks = tasks;
+    
+    if (filter) {
+      const today = moment().format('YYYY-MM-DD');
+      const tomorrow = moment().add(1, 'days').format('YYYY-MM-DD');
+
+      switch (filter) {
+        case 'complete':
+          filteredTasks = tasks.filter(task => task.complete === true);
+          break;
+        case 'todayTomorrow':
+          filteredTasks = tasks.filter(task => {
+            return moment(task.dueDate).isSame(today) || moment(task.dueDate).isSame(tomorrow);
+          });
+          break;
+        case 'overdue':
+          filteredTasks = tasks.filter(task => moment(task.dueDate).isBefore(today));
+          break;
+        case 'clear':
+          filteredTasks = tasks;
+          break;
+        default:
+          break;
+      }
+    }
 
     return (
       <div className="app">
@@ -101,12 +141,15 @@ export default class App extends Component {
             <button>+ Add Task</button>
           </form>
         </FormContainer>
-        {tasks &&
-          <TaskList
-            tasks={tasks}
-            completeTask={this.completeTask}
-            removeTask={this.removeTask}
-          />
+        {tasks.length !== 0 &&
+          <React.Fragment>
+            <Filters ref={(el) => this.filters = el} filterBy={(e) => this.filterBy(e)}/>
+            <TaskList
+              tasks={filteredTasks}
+              completeTask={this.completeTask}
+              removeTask={this.removeTask}
+            />
+          </React.Fragment>
         }
       </div>
     );
