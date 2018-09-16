@@ -3,12 +3,21 @@ import styled from 'styled-components';
 
 export default class Filters extends Component {
   render() {
-    const { filterBy, clearFilters } = this.props;
+    const { filterBy } = this.props;
 
     return (
       <FilterContainer>
-        <h2>Filter tasks by:</h2>
+        <h1>Filter tasks by:</h1>
         <form ref={(el) => this.filterForm = el}>
+          <FilterGroup>
+            <input
+              id="all"
+              type="radio"
+              name="filter"
+              value="all"
+              onChange={filterBy} />
+            <label htmlFor="all">All</label>
+          </FilterGroup>
           <FilterGroup>
             <input
               id="todayTomorrow"
@@ -36,23 +45,20 @@ export default class Filters extends Component {
               onChange={filterBy} />
             <label htmlFor="complete">Complete</label>
           </FilterGroup>
-          <FilterGroup>
-            <ClearButton onClick={clearFilters}>Clear</ClearButton>
-          </FilterGroup>
         </form>
       </FilterContainer>
     )
   }
 }
 
-const FilterContainer = styled.div`
+const FilterContainer = styled.section`
   margin-bottom: 1rem;
   form {
     display: flex;
     align-items: center;
     justify-content: space-between;
   }
-  h2 {
+  h1 {
     color: #fff;
     font-size: 16px;
   }
@@ -68,22 +74,11 @@ const FilterGroup = styled.div`
     display: inline-block;
     padding: .5rem;
     border-radius: 4px;
-    border: 2px solid #fff;
+    border: 1px solid #fff;
     background-color: transparent;
     cursor: pointer;
   }
   input:checked ~ label {
     background-color: #188291;
   }
-`;
-
-const ClearButton = styled.button`
-  color: #fff;
-  font-size: .875rem;
-  display: inline-block;
-  padding: .5rem;
-  border-radius: 4px;
-  border: 2px solid #fff;
-  background-color: transparent;
-  cursor: pointer;
 `;

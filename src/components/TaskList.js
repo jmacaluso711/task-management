@@ -1,9 +1,13 @@
 import React from 'react';
 import Task from './Task';
-import styled from 'styled-components';
+import FlipMove from 'react-flip-move';
 
-const TaskList = ({ tasks, completeTask, removeTask, filter }) => (
-  <Tasks>
+const TaskList = ({ tasks, completeTask, removeTask }) => (
+  <FlipMove 
+    typeName="ul"
+    duration={250}
+    style={{margin: '0px', padding: '0'}}
+    >
     {
       tasks.map((task, index) =>
         <Task
@@ -12,16 +16,9 @@ const TaskList = ({ tasks, completeTask, removeTask, filter }) => (
           task={task}
           completeTask={completeTask}
           removeTask={removeTask}
-          filter={filter}
         />)
     }
-  </Tasks>
+  </FlipMove>
 )
-
-const Tasks = styled.ul`
-  width: 100%;
-  margin: 0;
-  padding: 0;
-`
 
 export default TaskList;

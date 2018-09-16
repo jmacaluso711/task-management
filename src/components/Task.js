@@ -28,7 +28,7 @@ export default class Task extends Component {
     const dueTomorrow = moment(task.dueDate).isSame(tomorrow);
     
     return (
-      <TaskItem>
+      <TaskItem className={task.complete ? 'task-complete' : ''}>
         <span>  
           <input 
             id={'task-'+index} 
@@ -40,9 +40,9 @@ export default class Task extends Component {
         </span>
         <div>
           <time dateTime={task.dueDate}>
+            <span>{moment(task.dueDate).format('MMM Do YYYY')}</span>
             {dueDatePast ? <span className="warning warning--overdue">Overdue!</span> : ''}
             {dueToday || dueTomorrow ? <span className="warning warning--due-soon">Due Soon!</span> : ''}
-            {moment(task.dueDate).format('MMM Do YYYY')}
           </time>
           <h2>{task.name}</h2>
           <p>{task.description}</p>
@@ -59,7 +59,7 @@ const TaskItem = styled.li`
   margin-bottom: 1rem;
   border-radius: 8px;
   border: 1px solid #00b6cb;
-  box-shadow: 0px 0px 10px rgba(18, 163, 180,.6);
+  box-shadow: 0px 0px 10px rgba(24, 130, 145,.6);
   background-color: #fff;
 
   > span {
@@ -67,6 +67,38 @@ const TaskItem = styled.li`
     flex: 1;
     align-items: center;
     justify-content: center;
+
+    input {
+      display: none;
+    }
+
+    label {
+      display: block;
+      position: relative;
+      width: 30px;
+      height: 30px;
+      border: 1px solid #00b6cb;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    label:before {
+      content: " ";
+      display: block;
+      position: absolute;
+      left: 4px;
+      top: 4px;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      transform: scale(0);
+      transition: all 0.2s ease;
+    }
+
+    input:checked ~ label:before {
+      transform: scale(1);
+      background-color: #00b6cb;
+    }
   }
 
   > div {
@@ -78,18 +110,23 @@ const TaskItem = styled.li`
 
     time {
       font-size: 10px;
+
+      span {
+        color: #fff;
+        font-weight: bold;
+        display: inline-block;
+        margin-right: 10px;
+        padding: 3px 5px;
+        border-radius: 3px;
+        background-color: #12a3b4;
+        transition: all 0.2s ease;
+      }
     }
 
-    .warning {
-      color: #fff;
-      display: inline-block;
-      margin-right: 10px;
-      padding: 3px;
-      border-radius: 3px;
-    }
     .warning--overdue {
       background-color: #ff5c49;
     }
+
     .warning--due-soon {
       background-color: #34bc6e;
     }
@@ -105,6 +142,18 @@ const TaskItem = styled.li`
     font-size: 12px;
     margin: 0;
   }
+
+  &.task-complete {
+    background-color: #f0f0f0;
+    h2 {
+      text-decoration: line-through;
+    }
+    time span,
+    .warning--overdue,
+    .warning--due-soon {
+      background-color: #a6a5a6;
+    }
+  }
 `
 
 const ButtonRemove = styled.button`
@@ -114,7 +163,12 @@ const ButtonRemove = styled.button`
   display: block;
   width: 75px;
   border: none;
+  border-radius: 0 8px 8px 0;
   margin-left: auto;
   cursor: pointer;
-  background-color: transparent;
+  background-color: #eaeaea;
+  transition: all 0.3s ease;
+  &:hover {
+    background-color: #d8d8d8
+  }
 `

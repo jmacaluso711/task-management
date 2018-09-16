@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import TaskList from './components/TaskList';
 import Filters from './components/Filters';
 import moment from 'moment';
+import FlipMove from 'react-flip-move';
 const token = 'tasks'
 
 export default class App extends Component {
@@ -38,7 +39,9 @@ export default class App extends Component {
       }, 
       () => this.save()
     );
-    this.filters.filterForm.reset();
+    if(this.filters) {
+      this.filters.filterForm.reset();
+    }
     this.taskForm.reset();
   }
 
@@ -79,23 +82,10 @@ export default class App extends Component {
     });
   }
 
-  /**
-   * Clear our filter state and reset the filter form
-   * to get back to the default state
-   */
-  clearFilters = (e) => {
-    e.preventDefault();
-    this.setState({
-      filter: ''
-    });
-    this.filters.filterForm.reset();
-  }
-
   render() {
     const { tasks, filter } = this.state;
     let filteredTasks = tasks;
 
-    
     /**
      * Update our filteredTasks variable 
      * based on the selected filter
@@ -115,6 +105,9 @@ export default class App extends Component {
         case 'overdue':
           filteredTasks = tasks.filter(task => moment(task.dueDate).isBefore(today));
           break;
+        case 'all':
+          filteredTasks = tasks;
+          break;
         default:
           break;
       }
@@ -123,7 +116,7 @@ export default class App extends Component {
     return (
       <div className="app">
         <FormContainer>
-          <h2>Add a Task</h2>
+          <h1>Add a Task</h1>
           <form ref={(el) => this.taskForm = el} onSubmit={(e) => this.addTask(e)}>
             <FormGroup>
               <label htmlFor="name">Name</label>
@@ -156,35 +149,40 @@ export default class App extends Component {
             <AddTaskButton>+ Add Task</AddTaskButton>
           </form>
         </FormContainer>
-        {tasks.length !== 0 &&
-          <React.Fragment>
-            <Filters 
-              ref={(el) => this.filters = el} 
-              filterBy={(e) => this.filterBy(e)}
-              clearFilters={(e) => this.clearFilters(e)}
-            />
+          <TasksContainer>
+            <FlipMove
+              delay={200}
+              duration={250}
+              easing="ease-out"
+              maintainContainerHeight={true}
+            >
+              {tasks.length !== 0 && 
+                <Filters 
+                  ref={(el) => this.filters = el} 
+                  filterBy={(e) => this.filterBy(e)}
+                />
+              }
+            </FlipMove>
             <TaskList
               tasks={filteredTasks}
               completeTask={this.completeTask}
               removeTask={this.removeTask}
-              filter={filter}
             />
-          </React.Fragment>
-        }
+          </TasksContainer>
       </div>
     );
   }
 }
 
-const FormContainer = styled.div`
-  background-color: #fff;
+const FormContainer = styled.section`
   padding: 1rem;
+  margin-right: 3rem;
   border-radius: 8px;
   border: 1px solid #00b6cb;
-  box-shadow: 0px 0px 10px rgba(18, 163, 180,.6);
-  margin-bottom: 2rem;
+  box-shadow: 0px 0px 10px rgba(24, 130, 145,.6);
+  background-color: #fff;
 
-  h2 {
+  h1 {
     margin-top: 0;
   }
 
@@ -229,4 +227,11 @@ const AddTaskButton = styled.button`
   &:hover {
     background-color: #db7c00
   }
+`;
+
+const TasksContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  max-width: 420px;
 `;
