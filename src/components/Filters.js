@@ -86,6 +86,6 @@ const FilterGroup = styled.div`
   }
   input:checked ~ label {
     color: #fff;
-    background-color: #b8c1c1;
+    background-color: #6f7878;
   }
 `;

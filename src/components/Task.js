@@ -112,6 +112,7 @@ const TaskItem = styled.li`
     background-color: #f0f0f0;
 
     h2 {
+      color: #6f7878
       text-decoration: line-through;
     }
 
@@ -119,7 +120,7 @@ const TaskItem = styled.li`
       color: #a6a5a6;
       pointer-events: none;
     }
-    
+
     time span,
     .warning--overdue,
     .warning--due-soon {

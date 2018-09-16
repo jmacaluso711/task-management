@@ -138,6 +138,7 @@ export default class App extends Component {
                 ref={(input) => this.name = input}
                 name="name"
                 type="text"
+                placeholder="Name"
                 required
               />
             </FormGroup>
@@ -148,6 +149,7 @@ export default class App extends Component {
                 name="description" 
                 cols="30" 
                 rows="3"
+                placeholder="Description"
                 required
               ></textarea>
             </FormGroup>
@@ -201,6 +203,10 @@ const FormContainer = styled.section`
   background-color: #d0dada;
 
   @media (max-width: 875px) {
+    grid-column: col-start 1 / span 5;
+  }
+
+  @media (max-width: 750px) {
     grid-column: col-start 1 / span 12;
   }
 
@@ -211,6 +217,7 @@ const FormContainer = styled.section`
   input,
   textarea {
     width: 100%;
+    border-radius: 4px;
   }
 `;
 
@@ -258,6 +265,10 @@ const TasksContainer = styled.section`
   grid-column: col-start 7 / span 6;
 
   @media (max-width: 875px) {
+    grid-column: col-start 6 / span 7;
+  }
+
+  @media (max-width: 750px) {
     grid-column: col-start 1 / span 12;
   }
 `;
