@@ -191,9 +191,8 @@ export default class App extends Component {
 }
 
 const FormContainer = styled.section`
+  grid-column: col-start 1 / span 6;
   padding: 1rem;
-  margin-right: 2rem;
-  width: 420px;
   border-radius: 8px;
   border: 1px solid #00b6cb;
   box-shadow: 0px 0px 10px rgba(24, 130, 145,.6);
@@ -246,11 +245,8 @@ const AddTaskButton = styled.button`
   }
 `;
 
-
-
-const TasksContainer = styled.div`
-  width: 80%;
-  max-width: 420px;
+const TasksContainer = styled.section`
+  grid-column: col-start 7 / span 6;
 `;
 
 const EmptyMessage = styled.h3`

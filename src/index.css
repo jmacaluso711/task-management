@@ -12,8 +12,8 @@ body {
 }
 
 .app {
-  width: 100%;
-  margin: 0 auto;
-  display: flex;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: repeat(12, [col-start] 1fr);
+  grid-gap: 20px;
+  max-width: 1000px;
 }
