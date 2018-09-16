@@ -147,7 +147,7 @@ export default class App extends Component {
                 ref={(input) => this.description = input}
                 name="description" 
                 cols="30" 
-                rows="5"
+                rows="3"
                 required
               ></textarea>
             </FormGroup>
@@ -199,6 +199,10 @@ const FormContainer = styled.section`
   border-radius: 8px;
   border: 1px solid #b8c1c1;
   background-color: #d0dada;
+
+  @media (max-width: 875px) {
+    grid-column: col-start 1 / span 12;
+  }
 
   h1 {
     margin-top: 0;
@@ -252,6 +256,10 @@ const AddTaskButton = styled.button`
 
 const TasksContainer = styled.section`
   grid-column: col-start 7 / span 6;
+
+  @media (max-width: 875px) {
+    grid-column: col-start 1 / span 12;
+  }
 `;
 
 const EmptyMessage = styled.h3`
