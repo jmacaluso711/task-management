@@ -3,11 +3,11 @@
 }
 
 body {
-  color: #595859;
+  color: #424747;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   margin: 0;
   padding: 2rem;
-  background-color: #00b6cb;
+  background-color: #e3ecec;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -15,5 +15,6 @@ body {
   display: grid;
   grid-template-columns: repeat(12, [col-start] 1fr);
   grid-gap: 20px;
-  max-width: 1000px;
+  margin: auto;
+  max-width: 875px;
 }

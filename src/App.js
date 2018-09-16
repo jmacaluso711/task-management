@@ -190,13 +190,15 @@ export default class App extends Component {
   }
 }
 
+/**
+ * Styled Components
+ */
 const FormContainer = styled.section`
   grid-column: col-start 1 / span 6;
   padding: 1rem;
   border-radius: 8px;
-  border: 1px solid #00b6cb;
-  box-shadow: 0px 0px 10px rgba(24, 130, 145,.6);
-  background-color: #fff;
+  border: 1px solid #b8c1c1;
+  background-color: #d0dada;
 
   h1 {
     margin-top: 0;
@@ -212,9 +214,9 @@ const FormGroup = styled.div`
   margin-bottom: .5rem;
   input, textarea {
     color: #333;
-    font-size: 12px;
+    font-size: 13px;
     padding: .75rem;
-    border: 1px solid lightgray;
+    border: 1px solid #b8c1c1;
     
     &:focus {
       outline: none;
@@ -233,15 +235,18 @@ const AddTaskButton = styled.button`
   color: #fff;  
   font-size: 1rem;
   font-weight: bold;
-  margin-top: 1rem;
+  margin-top: .75rem;
   padding: .75rem 2rem;
   border: none;
   border-radius: 5px;
-  background-color: #fe8500;
+  background-color: #6f7878;
   transition: all 0.3s ease;
   cursor: pointer;
   &:hover {
-    background-color: #db7c00;
+    background-color: #535a5a;
+  }
+  &:focus {
+    outline: none;
   }
 `;
 
@@ -250,11 +255,11 @@ const TasksContainer = styled.section`
 `;
 
 const EmptyMessage = styled.h3`
-  color: #fff;
+  color: #424747;
   font-weight: normal;
   font-size: 16px;
   padding: 1rem;
   margin: 0;
   border-radius: 8px;
-  border: 1px solid #fff;
+  border: 1px solid #9fa7a7;
 `
