@@ -80,6 +80,10 @@ const TaskItem = styled.li`
   box-shadow: 0px 0px 10px rgba(24, 130, 145,.6);
   background-color: #fff;
 
+  &:last-child {
+    margin-bottom: 0;
+  }
+
   > span {
     display: flex;
     flex: 1;
