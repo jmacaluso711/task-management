@@ -52,15 +52,21 @@ export default class Filters extends Component {
 }
 
 const FilterContainer = styled.section`
+  padding: 1rem;
   margin-bottom: 1rem;
+  border-radius: 8px;
+  border: 1px solid #00b6cb;
+  box-shadow: 0px 0px 10px rgba(24, 130, 145,.6);
+  background-color: #fff;
   form {
     display: flex;
     align-items: center;
     justify-content: space-between;
   }
   h1 {
-    color: #fff;
+    color: #188291;
     font-size: 16px;
+    margin-top: 0;
   }
 `;
 
@@ -69,16 +75,17 @@ const FilterGroup = styled.div`
     display: none;
   }
   label {
-    color: #fff;
+    color: #188291;
     font-size: .875rem;
     display: inline-block;
     padding: .5rem;
     border-radius: 4px;
-    border: 1px solid #fff;
+    border: 1px solid #188291;
     background-color: transparent;
     cursor: pointer;
   }
   input:checked ~ label {
+    color: #fff;
     background-color: #188291;
   }
 `;

@@ -4,12 +4,14 @@ import TaskList from './components/TaskList';
 import Filters from './components/Filters';
 import moment from 'moment';
 import FlipMove from 'react-flip-move';
+import Overdrive from 'react-overdrive';
 const token = 'tasks'
 
 export default class App extends Component {
   state = {
     tasks: JSON.parse(localStorage.getItem(token)) || [],
-    filter: ''
+    filter: '',
+    showForm: false
   }
 
   /**
@@ -82,8 +84,14 @@ export default class App extends Component {
     });
   }
 
+  showForm = () => {
+    this.setState({
+      showForm: !this.state.showForm
+    })
+  }
+
   render() {
-    const { tasks, filter } = this.state;
+    const { tasks, filter, showForm } = this.state;
     let filteredTasks = tasks;
 
     /**
@@ -115,60 +123,69 @@ export default class App extends Component {
 
     return (
       <div className="app">
-        <FormContainer>
-          <h1>Add a Task</h1>
-          <form ref={(el) => this.taskForm = el} onSubmit={(e) => this.addTask(e)}>
-            <FormGroup>
-              <label htmlFor="name">Name</label>
-              <input 
-                ref={(input) => this.name = input}
-                name="name"
-                type="text"
-                required
-              />
-            </FormGroup>
-            <FormGroup>
-              <label htmlFor="description">Description</label>
-              <textarea 
-                ref={(input) => this.description = input}
-                name="description" 
-                cols="30" 
-                rows="5"
-                required
-              ></textarea>
-            </FormGroup>
-            <FormGroup>
-              <label htmlFor="dueDate">Due Date</label>
-              <input 
-                ref={(input) => this.dueDate = input}
-                name="dueDate"
-                type="date"
-                required
-              />
-            </FormGroup>
-            <AddTaskButton>+ Add Task</AddTaskButton>
-          </form>
-        </FormContainer>
-          <TasksContainer>
-            <FlipMove
-              delay={200}
-              duration={250}
-              easing="ease-out"
-              maintainContainerHeight={true}
-            >
-              {tasks.length !== 0 && 
-                <Filters 
-                  ref={(el) => this.filters = el} 
-                  filterBy={(e) => this.filterBy(e)}
+        <Overdrive id="form-transition">
+          <button onClick={this.showForm}>Add a task +</button>
+        </Overdrive>
+        <Overdrive id="form-transition">
+        <div>
+        {showForm && 
+          <FormContainer>
+            <h1>Add a Task</h1>
+            <form ref={(el) => this.taskForm = el} onSubmit={(e) => this.addTask(e)}>
+              <FormGroup>
+                <label htmlFor="name">Name</label>
+                <input 
+                  ref={(input) => this.name = input}
+                  name="name"
+                  type="text"
+                  required
                 />
-              }
-            </FlipMove>
-            <TaskList
-              tasks={filteredTasks}
-              completeTask={this.completeTask}
-              removeTask={this.removeTask}
-            />
-          </TasksContainer>
+              </FormGroup>
+              <FormGroup>
+                <label htmlFor="description">Description</label>
+                <textarea 
+                  ref={(input) => this.description = input}
+                  name="description" 
+                  cols="30" 
+                  rows="5"
+                  required
+                ></textarea>
+              </FormGroup>
+              <FormGroup>
+                <label htmlFor="dueDate">Due Date</label>
+                <input 
+                  ref={(input) => this.dueDate = input}
+                  name="dueDate"
+                  type="date"
+                  required
+                />
+              </FormGroup>
+              <AddTaskButton>+ Add Task</AddTaskButton>
+            </form>
+          </FormContainer>
+          }
+            </div>
+        </Overdrive>
+        <TasksContainer>
+          <FlipMove
+            delay={200}
+            duration={250}
+            easing="ease-out"
+            maintainContainerHeight={true}
+          >
+            {tasks.length !== 0 && 
+              <Filters 
+                ref={(el) => this.filters = el} 
+                filterBy={(e) => this.filterBy(e)}
+              />
+            }
+          </FlipMove>
+          <TaskList
+            tasks={filteredTasks}
+            completeTask={this.completeTask}
+            removeTask={this.removeTask}
+          />
+        </TasksContainer>
       </div>
     );
   }
@@ -225,9 +242,10 @@ const AddTaskButton = styled.button`
   transition: all 0.3s ease;
   cursor: pointer;
   &:hover {
-    background-color: #db7c00
+    background-color: #db7c00;
   }
 `;
+
 
 const TasksContainer = styled.div`
   display: flex;

@@ -3,6 +3,10 @@ import styled from 'styled-components';
 import moment from 'moment';
 
 export default class Task extends Component {
+  state = {
+    showDetail: false
+  }
+
   /**
    * Pass the task object to our App component
    * so we can toggle the complete value
@@ -19,8 +23,19 @@ export default class Task extends Component {
     this.props.removeTask(index);
   }
 
+  /**
+   * When user clicks "View Details"
+   * toggle the showDetail state
+   */
+  toggleDetail = () => {
+    this.setState({
+      showDetail: !this.state.showDetail
+    });
+  }
+
   render() {
     const { task, index } = this.props;
+    const { showDetail } = this.state;
     const today = moment().format('YYYY-MM-DD');
     const tomorrow = moment().add(1, 'days').format('YYYY-MM-DD');
     const dueDatePast = moment(task.dueDate).isBefore(today);
@@ -28,7 +43,7 @@ export default class Task extends Component {
     const dueTomorrow = moment(task.dueDate).isSame(tomorrow);
     
     return (
-      <TaskItem className={task.complete ? 'task-complete' : ''}>
+      <TaskItem detailVisible={showDetail} className={task.complete ? 'task-complete' : ''}>
         <span>  
           <input 
             id={'task-'+index} 
@@ -45,7 +60,10 @@ export default class Task extends Component {
             {dueToday || dueTomorrow ? <span className="warning warning--due-soon">Due Soon!</span> : ''}
           </time>
           <h2>{task.name}</h2>
-          <p>{task.description}</p>
+          {showDetail && <p>{task.description}</p>}
+          <span className="view-details" onClick={() => this.toggleDetail()}>
+            {showDetail ? 'Hide Details' : 'View Details'}
+          </span>
         </div>
         <ButtonRemove onClick={() => this.remove(index)}>x</ButtonRemove>
       </TaskItem>
@@ -114,11 +132,12 @@ const TaskItem = styled.li`
       span {
         color: #fff;
         font-weight: bold;
+        font-size: 11px;
         display: inline-block;
         margin-right: 10px;
         padding: 3px 5px;
         border-radius: 3px;
-        background-color: #12a3b4;
+        background-color:  #00b6cb;
         transition: all 0.2s ease;
       }
     }
@@ -131,16 +150,26 @@ const TaskItem = styled.li`
       background-color: #34bc6e;
     }
   }
+
+  .view-details {
+    color: #188291;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    &:hover {
+      color: #17616b;
+    }
+  }
   
   h2 {
-    font-size: 16px;
+    font-size: 17px;
     font-weight: bold;
-    margin: .25rem 0;
+    margin: .45rem 0;
   }
 
   p {
     font-size: 12px;
-    margin: 0;
+    margin: 0 0 .75rem 0;
   }
 
   &.task-complete {
@@ -148,13 +177,17 @@ const TaskItem = styled.li`
     h2 {
       text-decoration: line-through;
     }
+    .view-details {
+      color: #a6a5a6;
+      pointer-events: none;
+    }
     time span,
     .warning--overdue,
     .warning--due-soon {
       background-color: #a6a5a6;
     }
   }
-`
+`;
 
 const ButtonRemove = styled.button`
   color: gray;
