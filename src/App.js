@@ -85,6 +85,11 @@ export default class App extends Component {
   render() {
     const { tasks, filter } = this.state;
     let filteredTasks = tasks;
+    let listEmptyMessage;
+
+    if (filteredTasks.length === 0) {
+      listEmptyMessage = <EmptyMessage>You don't have any tasks.</EmptyMessage>
+    }
 
     /**
      * Update our filteredTasks variable 
@@ -98,12 +103,21 @@ export default class App extends Component {
           filteredTasks = tasks.filter(task => {
             return moment(task.dueDate).isSame(today) || moment(task.dueDate).isSame(tomorrow);
           });
+          if (filteredTasks.length === 0) {
+            listEmptyMessage = <EmptyMessage>No tasks due today or tomorrow</EmptyMessage>
+          }
           break;
         case 'complete':
           filteredTasks = tasks.filter(task => task.complete === true);
+          if (filteredTasks.length === 0) {
+            listEmptyMessage = <EmptyMessage>No tasks completed</EmptyMessage>
+          }
           break;
         case 'overdue':
           filteredTasks = tasks.filter(task => moment(task.dueDate).isBefore(today));
+          if (filteredTasks.length === 0) {
+            listEmptyMessage = <EmptyMessage>No tasks overdue</EmptyMessage>
+          }
           break;
         case 'all':
           filteredTasks = tasks;
@@ -162,6 +176,9 @@ export default class App extends Component {
               />
             }
           </FlipMove>
+          <FlipMove leaveAnimation='none' delay={250}>
+            {listEmptyMessage}
+          </FlipMove>
           <TaskList
             tasks={filteredTasks}
             completeTask={this.completeTask}
@@ -176,6 +193,7 @@ export default class App extends Component {
 const FormContainer = styled.section`
   padding: 1rem;
   margin-right: 2rem;
+  width: 420px;
   border-radius: 8px;
   border: 1px solid #00b6cb;
   box-shadow: 0px 0px 10px rgba(24, 130, 145,.6);
@@ -229,7 +247,18 @@ const AddTaskButton = styled.button`
 `;
 
 
+
 const TasksContainer = styled.div`
   width: 80%;
   max-width: 420px;
 `;
+
+const EmptyMessage = styled.h3`
+  color: #fff;
+  font-weight: normal;
+  font-size: 16px;
+  padding: 1rem;
+  margin: 0;
+  border-radius: 8px;
+  border: 1px solid #fff;
+`
