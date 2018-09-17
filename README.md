@@ -6,6 +6,7 @@ Thanks for the opportunity to complete the tech assessment. I had a lot of fun w
 
 ```
   1. clone this repo
+  2. cd into task-management
   2. npm install
   3. npm start
 ```
