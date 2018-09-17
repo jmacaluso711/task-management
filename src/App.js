@@ -88,7 +88,7 @@ export default class App extends Component {
     let listEmptyMessage;
 
     if (filteredTasks.length === 0) {
-      listEmptyMessage = <EmptyMessage>You don't have any tasks.</EmptyMessage>
+      listEmptyMessage = <EmptyMessage>You do not have any tasks.</EmptyMessage>
     }
 
     /**
