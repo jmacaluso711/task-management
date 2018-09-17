@@ -12,8 +12,6 @@ Thanks for the opportunity to complete the tech assessment. I had a lot of fun w
 
 The site will open at `localhost:3000`.
 
-## Preview
-
 ## Notes
 
 - I chose to keep my focus on the front end.
